@@ -8,7 +8,7 @@ const HeroText = () => {
     visible: { opacity: 1, x: 0 },
   };
   return (
-    <div className="z-10 mt-20 text-center md:mt-40 md:text-left rounded-3xl bg-clip-text">
+    <div className="z-20 mt-20 text-center md:mt-40 md:text-left rounded-3xl bg-clip-text">
       {/* Desktop View */}
       <div className="flex-col hidden md:flex c-space">
         <motion.h1
@@ -50,6 +50,26 @@ const HeroText = () => {
           >
             Web Solutions
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.1 }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() =>
+                document.getElementById("projects")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
+              aria-label="View projects"
+              className="mt-8 px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
+            >
+              View Projects
+            </motion.button>
+          </motion.div>
         </div>
       </div>
       {/* Mobile View */}
@@ -93,6 +113,26 @@ const HeroText = () => {
           >
             Web Applications
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.1 }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() =>
+                document.getElementById("projects")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
+              aria-label="View projects"
+              className="mt-6 px-5 py-2 rounded-md bg-indigo-600 text-white shadow"
+            >
+              View Projects
+            </motion.button>
+          </motion.div>
         </div>
       </div>
     </div>

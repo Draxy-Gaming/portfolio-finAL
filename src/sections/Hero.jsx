@@ -1,6 +1,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import HeroText from "../components/HeroText";
 import ParallaxBackground from "../components/parallaxBackground";
+import { Particles } from "../components/Particles";
 import { Astronaut } from "../components/Astronaut";
 import { Float } from "@react-three/drei";
 import { useMediaQuery } from "react-responsive";
@@ -12,6 +13,7 @@ const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 853 });
   return (
     <section className="flex items-start justify-center min-h-screen overflow-hidden md:items-start md:justify-start c-space">
+      <Particles className="absolute inset-0 z-0" color="#6ee7b7" quantity={60} size={0.6} />
       <HeroText />
       <ParallaxBackground />
       <figure
