@@ -16,22 +16,25 @@ const Hero = () => {
       <Particles className="absolute inset-0 z-0" color="#6ee7b7" quantity={60} size={0.6} />
       <HeroText />
       <ParallaxBackground />
-      <figure
-        className="absolute inset-0"
-        style={{ width: "100vw", height: "100vh" }}
-      >
-        <Canvas camera={{ position: [0, 1, 3] }}>
-          <Suspense fallback={<Loader />}>
-            <Float>
-              <Astronaut
-                scale={isMobile && 0.23}
-                position={isMobile && [0, -1.5, 0]}
-              />
-            </Float>
-            <Rig />
-          </Suspense>
-        </Canvas>
-      </figure>
+      {!isMobile && (
+        <figure
+          className="absolute inset-0"
+          style={{ width: "100vw", height: "100vh" }}
+        >
+          <Canvas
+            camera={{ position: [0, 1, 3] }}
+            dpr={[1, 1.5]}
+            gl={{ antialias: false, powerPreference: "low-power" }}
+          >
+            <Suspense fallback={<Loader />}>
+              <Float>
+                <Astronaut scale={0.3} position={[1.3, -1, 0]} />
+              </Float>
+              <Rig />
+            </Suspense>
+          </Canvas>
+        </figure>
+      )}
     </section>
   );
 };

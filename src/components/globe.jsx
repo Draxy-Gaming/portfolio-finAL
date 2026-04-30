@@ -3,6 +3,7 @@
 import createGlobe from "cobe";
 import { useMotionValue, useSpring } from "motion/react";
 import { useEffect, useRef } from "react";
+import { useMediaQuery } from "react-responsive";
 
 import { twMerge } from "tailwind-merge";
 
@@ -12,12 +13,12 @@ const GLOBE_CONFIG = {
   width: 800,
   height: 800,
   onRender: () => {},
-  devicePixelRatio: 2,
+  devicePixelRatio: 1,
   phi: 0,
   theta: 0.3,
   dark: 1,
   diffuse: 0.4,
-  mapSamples: 16000,
+  mapSamples: 12000,
   mapBrightness: 1.2,
   baseColor: [1, 1, 1],
   markerColor: [1, 1, 1],
@@ -37,11 +38,10 @@ const GLOBE_CONFIG = {
 };
 
 export function Globe({ className, config = GLOBE_CONFIG }) {
-  let phi = 0;
-  let width = 0;
   const canvasRef = useRef(null);
   const pointerInteracting = useRef(null);
   const pointerInteractionMovement = useRef(0);
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const r = useMotionValue(0);
   const rs = useSpring(r, {
@@ -66,6 +66,10 @@ export function Globe({ className, config = GLOBE_CONFIG }) {
   };
 
   useEffect(() => {
+    if (isMobile) return;
+
+    let width = 0;
+
     const onResize = () => {
       if (canvasRef.current) {
         width = canvasRef.current.offsetWidth;
@@ -77,22 +81,41 @@ export function Globe({ className, config = GLOBE_CONFIG }) {
 
     const globe = createGlobe(canvasRef.current, {
       ...config,
-      width: width * 2,
-      height: width * 2,
+      width,
+      height: width,
       onRender: (state) => {
         if (!pointerInteracting.current) phi += 0.005;
         state.phi = phi + rs.get();
-        state.width = width * 2;
-        state.height = width * 2;
+        state.width = width;
+        state.height = width;
       },
     });
 
-    setTimeout(() => (canvasRef.current.style.opacity = "1"), 0);
+    setTimeout(() => {
+      if (canvasRef.current) canvasRef.current.style.opacity = "1";
+    }, 0);
     return () => {
       globe.destroy();
       window.removeEventListener("resize", onResize);
     };
-  }, [rs, config]);
+  }, [rs, config, isMobile]);
+
+  if (isMobile) {
+    return (
+      <div
+        className={twMerge(
+          "mx-auto aspect-[1/1] w-full max-w-[600px] rounded-3xl bg-slate-950/80",
+          className
+        )}
+      >
+        <div className="flex items-center justify-center w-full h-full text-sm text-neutral-400">
+          Globe view disabled on mobile for better performance
+        </div>
+      </div>
+    );
+  }
+
+  let phi = 0;
 
   return (
     <div

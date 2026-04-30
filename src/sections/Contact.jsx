@@ -55,7 +55,7 @@ const Contact = () => {
     <section className="relative flex items-center c-space section-spacing">
       <Particles
         className="absolute inset-0 -z-50"
-        quantity={100}
+        quantity={60}
         ease={80}
         color={"#ffffff"}
         refresh
