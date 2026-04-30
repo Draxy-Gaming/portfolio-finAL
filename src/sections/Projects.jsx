@@ -20,7 +20,7 @@ const Projects = () => {
       className="relative c-space section-spacing"
     >
       <Reveal direction="right" distance={80}>
-        <h2 className="text-heading">My Selected Projects</h2>
+        <h2 className="text-heading">Featured Projects</h2>
       </Reveal>
       <div className="bg-gradient-to-r from-transparent via-neutral-700 to-transparent mt-12 h-[1px] w-full" />
       {myProjects.map((project) => (
