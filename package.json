@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"node server/index.js\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -16,12 +16,19 @@
     "@react-three/fiber": "^9.0.4",
     "@tailwindcss/vite": "^4.0.7",
     "@types/three": "^0.173.0",
+    "better-sqlite3": "^12.11.1",
     "cobe": "^0.6.3",
+    "concurrently": "^10.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "lucide-react": "^1.24.0",
     "maath": "^0.10.8",
     "motion": "^12.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-responsive": "^10.0.0",
+    "react-router-dom": "^7.18.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.7",
     "three": "^0.173.0"
