@@ -40,12 +40,15 @@ const Navbar = () => {
           </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex cursor-pointer text-neutral-400 hover:text-white focus:outline-none sm:hidden"
+            aria-label="Toggle navigation menu"
+            aria-expanded={isOpen}
+            className="flex cursor-pointer text-neutral-400 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-sm sm:hidden"
           >
             <img
               src={isOpen ? "assets/close.svg" : "assets/menu.svg"}
               className="w-6 h-6"
-              alt="toggle"
+              alt=""
+              aria-hidden="true"
             />
           </button>
           <nav className="hidden sm:flex">
