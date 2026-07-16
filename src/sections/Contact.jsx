@@ -64,10 +64,10 @@ const Contact = () => {
       <Reveal direction="up" distance={30}>
         <div className="flex flex-col items-center justify-center max-w-md p-5 mx-auto border border-white/10 rounded-2xl bg-primary">
           <div className="flex flex-col items-start w-full gap-5 mb-10">
-            <h2 className="text-heading">Let's Talk</h2>
+            <h2 className="text-heading">Let&apos;s Talk</h2>
             <p className="font-normal text-neutral-400">
-              Whether you're loking to build a new website, improve your existing
-              platform, or bring a unique project to life, I'm here to help
+              Whether you&apos;re loking to build a new website, improve your existing
+              platform, or bring a unique project to life, I&apos;m here to help
             </p>
           </div>
           <form className="w-full" onSubmit={handleSubmit}>
@@ -122,8 +122,15 @@ const Contact = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-1 py-3 text-lg text-center rounded-md cursor-pointer bg-radial from-lavender to-royal hover-animation"
+            disabled={isLoading}
+            className="flex items-center justify-center gap-2 w-full px-1 py-3 text-lg text-center rounded-md cursor-pointer bg-radial from-lavender to-royal hover-animation disabled:opacity-70 disabled:cursor-not-allowed"
           >
+            {isLoading && (
+              <svg className="w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            )}
             {!isLoading ? "Send" : "Sending..."}
           </button>
         </form>
