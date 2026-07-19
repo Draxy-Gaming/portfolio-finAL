@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { motion } from "motion/react";
+
+/* eslint-disable react/prop-types */
 const ProjectDetails = ({
   title,
   description,
@@ -8,6 +11,14 @@ const ProjectDetails = ({
   href,
   closeModal,
 }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [closeModal]);
+
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center w-full h-full overflow-auto backdrop-blur-sm p-4">
       <motion.div
@@ -17,9 +28,10 @@ const ProjectDetails = ({
       >
         <button
           onClick={closeModal}
-          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500"
+          aria-label="Close project details"
+          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
         >
-          <img src="assets/close.svg" className="w-6 h-6" />
+          <img src="assets/close.svg" className="w-6 h-6" alt="" aria-hidden="true" />
         </button>
         <img src={image} alt={title} className="w-full rounded-t-2xl" />
         <div className="p-5">
@@ -43,10 +55,10 @@ const ProjectDetails = ({
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 font-medium hover-animation"
+              className="inline-flex items-center gap-1 font-medium hover-animation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-sm"
             >
               View Project
-              <img src="assets/arrow-up.svg" className="size-4" />
+              <img src="assets/arrow-up.svg" className="size-4" alt="" aria-hidden="true" />
             </a>
           </div>
         </div>
