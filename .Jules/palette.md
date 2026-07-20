@@ -1,3 +1,6 @@
 ## 2023-10-27 - Mobile Navigation Toggle Accessibility
 **Learning:** Icon-only navigation buttons lack context for screen readers and visible focus states for keyboard users by default. It's critical to add `aria-label`, `aria-expanded`, and explicitly hide decorative icons inside them with `aria-hidden="true"`.
 **Action:** Always check icon-only buttons for missing ARIA labels and ensure interactive elements have clear, visible focus states using utility classes like `focus-visible:ring-2`.
+## 2025-01-20 - Accessible Icon-Only Buttons
+**Learning:** Icon-only buttons (like the modal close button) frequently miss `aria-label`s, causing screen readers to announce unhelpful text or skip them entirely. Adding an `aria-label` along with `aria-hidden="true"` to the internal icon ensures a clear experience. In addition, existing buttons often lack explicit keyboard focus styles in this codebase.
+**Action:** When creating or modifying icon-only buttons, always include a descriptive `aria-label`, add `aria-hidden="true"` to the inner image/SVG, and ensure `focus-visible:ring-2 focus-visible:ring-white/20 focus:outline-none` (or similar appropriate Tailwind classes) are applied to provide a clear visible focus indicator for keyboard users.

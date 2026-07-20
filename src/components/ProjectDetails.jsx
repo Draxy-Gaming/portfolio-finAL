@@ -17,9 +17,10 @@ const ProjectDetails = ({
       >
         <button
           onClick={closeModal}
-          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500"
+          aria-label="Close project details"
+          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
         >
-          <img src="assets/close.svg" className="w-6 h-6" />
+          <img src="assets/close.svg" className="w-6 h-6" aria-hidden="true" />
         </button>
         <img src={image} alt={title} className="w-full rounded-t-2xl" />
         <div className="p-5">
