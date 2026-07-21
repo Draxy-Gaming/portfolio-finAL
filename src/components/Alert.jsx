@@ -8,6 +8,8 @@ const Alert = ({ type, text }) => {
   return (
     <AnimatePresence>
       <motion.div
+        role="alert"
+        aria-live="assertive"
         className="fixed z-50 flex items-center justify-center bottom-5 right-5"
         initial="hidden"
         animate="visible"
