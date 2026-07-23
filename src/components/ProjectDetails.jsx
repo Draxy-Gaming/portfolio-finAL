@@ -17,9 +17,10 @@ const ProjectDetails = ({
       >
         <button
           onClick={closeModal}
-          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500"
+          aria-label="Close project details"
+          className="absolute p-2 rounded-sm top-5 right-5 bg-midnight hover:bg-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm"
         >
-          <img src="assets/close.svg" className="w-6 h-6" />
+          <img src="assets/close.svg" className="w-6 h-6" aria-hidden="true" alt="" />
         </button>
         <img src={image} alt={title} className="w-full rounded-t-2xl" />
         <div className="p-5">
@@ -43,10 +44,10 @@ const ProjectDetails = ({
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 font-medium hover-animation"
+              className="inline-flex items-center gap-1 font-medium hover-animation focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm"
             >
               View Project
-              <img src="assets/arrow-up.svg" className="size-4" />
+              <img src="assets/arrow-up.svg" className="size-4" aria-hidden="true" alt="" />
             </a>
           </div>
         </div>
