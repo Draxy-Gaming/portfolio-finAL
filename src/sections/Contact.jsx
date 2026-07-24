@@ -72,8 +72,8 @@ const Contact = () => {
           </div>
           <form className="w-full" onSubmit={handleSubmit}>
           <div className="mb-5">
-            <label htmlFor="name" className="feild-label">
-              Full Name
+            <label htmlFor="name" className="field-label">
+              Full Name <span className="text-red-500">*</span>
             </label>
             <input
               id="name"
@@ -88,8 +88,8 @@ const Contact = () => {
             />
           </div>
           <div className="mb-5">
-            <label htmlFor="email" className="feild-label">
-              Email
+            <label htmlFor="email" className="field-label">
+              Email <span className="text-red-500">*</span>
             </label>
             <input
               id="email"
@@ -104,8 +104,8 @@ const Contact = () => {
             />
           </div>
           <div className="mb-5">
-            <label htmlFor="message" className="feild-label">
-              Message
+            <label htmlFor="message" className="field-label">
+              Message <span className="text-red-500">*</span>
             </label>
             <textarea
               id="message"
