@@ -123,7 +123,7 @@ const Contact = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="flex items-center justify-center gap-2 w-full px-1 py-3 text-lg text-center rounded-md cursor-pointer bg-radial from-lavender to-royal hover-animation disabled:opacity-70 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 w-full px-1 py-3 text-lg text-center rounded-md cursor-pointer bg-radial from-lavender to-royal hover-animation disabled:opacity-70 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
           >
             {isLoading && (
               <svg className="w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
