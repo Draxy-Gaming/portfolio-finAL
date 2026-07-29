@@ -5,3 +5,7 @@
 ## $(date +%Y-%m-%d) - Modal Action Accessibility
 **Learning:** Icon-only modal close buttons and decorative link icons in this project's modals often lack context. Keyboard focus states (`focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm`) are critical for navigation within modals where the visual boundary is restricted.
 **Action:** Always add `aria-label` to close buttons, use `aria-hidden="true"` and `alt=""` for decorative icons, and ensure `focus-visible` states are present on all interactive modal elements.
+
+## 2026-07-29 - Dynamic Button Text Accessibility
+**Learning:** When using `AnimatePresence` to dynamically change button text (e.g., from 'Copy Email' to 'Email Copied'), screen readers won't announce the change automatically, and decorative icons can create redundant noise.
+**Action:** Use `aria-live="polite"` on the button container to ensure text changes are announced gracefully. Pair this with `aria-hidden="true"` and `alt=""` on decorative SVG icons to prevent duplicate or messy announcements.
