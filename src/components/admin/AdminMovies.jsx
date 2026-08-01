@@ -86,12 +86,12 @@ export default function AdminMovies() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Admin: My Movies</h1>
           <div className="flex gap-4">
-            <button onClick={handleLogout} className="text-neutral-400 hover:text-white mr-4">Logout</button>
-            <Link to="/admin/categories" className="bg-storm text-white px-4 py-2 rounded font-medium border border-white/10 hover:bg-indigo">
+            <button onClick={handleLogout} className="text-neutral-400 hover:text-white mr-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm">Logout</button>
+            <Link to="/admin/categories" className="bg-storm text-white px-4 py-2 rounded font-medium border border-white/10 hover:bg-indigo focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm">
               Manage Categories
             </Link>
-            <Link to="/admin/movies/add" className="bg-white text-black px-4 py-2 rounded font-medium flex items-center">
-              <Plus className="w-5 h-5 mr-2" /> Add Movie
+            <Link to="/admin/movies/add" className="bg-white text-black px-4 py-2 rounded font-medium flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm">
+              <Plus className="w-5 h-5 mr-2" aria-hidden="true" /> Add Movie
             </Link>
           </div>
         </div>
@@ -160,21 +160,22 @@ export default function AdminMovies() {
                     <td className="p-4">
                       <button
                         onClick={() => toggleVisibility(movie)}
-                        className={`flex items-center gap-1 text-xs px-2 py-1 rounded ${
+                        aria-label={`Toggle visibility for ${movie.title}`}
+                        className={`flex items-center gap-1 text-xs px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm ${
                           movie.is_public ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
                         }`}
                       >
-                        {movie.is_public ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                        {movie.is_public ? <Eye className="w-4 h-4" aria-hidden="true" /> : <EyeOff className="w-4 h-4" aria-hidden="true" />}
                         {movie.is_public ? 'Public' : 'Private'}
                       </button>
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-3">
-                        <Link to={`/admin/movies/${movie.id}/edit`} className="text-blue-400 hover:text-blue-300">
-                          <Edit className="w-5 h-5" />
+                        <Link to={`/admin/movies/${movie.id}/edit`} aria-label={`Edit ${movie.title}`} className="text-blue-400 hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm">
+                          <Edit className="w-5 h-5" aria-hidden="true" />
                         </Link>
-                        <button onClick={() => deleteMovie(movie.id)} className="text-red-400 hover:text-red-300">
-                          <Trash2 className="w-5 h-5" />
+                        <button onClick={() => deleteMovie(movie.id)} aria-label={`Delete ${movie.title}`} className="text-red-400 hover:text-red-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm">
+                          <Trash2 className="w-5 h-5" aria-hidden="true" />
                         </button>
                       </div>
                     </td>
