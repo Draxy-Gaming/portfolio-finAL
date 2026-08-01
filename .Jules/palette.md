@@ -5,3 +5,6 @@
 ## $(date +%Y-%m-%d) - Modal Action Accessibility
 **Learning:** Icon-only modal close buttons and decorative link icons in this project's modals often lack context. Keyboard focus states (`focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm`) are critical for navigation within modals where the visual boundary is restricted.
 **Action:** Always add `aria-label` to close buttons, use `aria-hidden="true"` and `alt=""` for decorative icons, and ensure `focus-visible` states are present on all interactive modal elements.
+## 2024-11-20 - Admin Movies List Accessibility Improvement
+**Learning:** Icon-only action buttons (Edit, Delete, Toggle Visibility) in the Admin Movies list lack context for screen readers and visible focus states for keyboard users.
+**Action:** Always add descriptive `aria-label`s to icon-only action buttons, explicitly hide the internal icons with `aria-hidden="true"`, and ensure all interactive elements (buttons and links) have clear, visible focus states using utility classes like `focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm`.
