@@ -5,3 +5,7 @@
 ## $(date +%Y-%m-%d) - Modal Action Accessibility
 **Learning:** Icon-only modal close buttons and decorative link icons in this project's modals often lack context. Keyboard focus states (`focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:rounded-sm`) are critical for navigation within modals where the visual boundary is restricted.
 **Action:** Always add `aria-label` to close buttons, use `aria-hidden="true"` and `alt=""` for decorative icons, and ensure `focus-visible` states are present on all interactive modal elements.
+
+## $(date +%Y-%m-%d) - External Social Links Accessibility
+**Learning:** Icon-only external links in the footer lack context for screen readers and visible focus states for keyboard users. They also lack safety attributes for external navigation.
+**Action:** Always add `aria-label` to external links, use `aria-hidden="true"` and `alt=""` for their decorative icons, ensure `focus-visible` states are present, and add `target="_blank"` with `rel="noreferrer"` for safety.
