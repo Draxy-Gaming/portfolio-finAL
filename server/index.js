@@ -79,8 +79,8 @@ const generateSlug = (title, year) => {
 // Mock auth middleware - required auth
 const authenticateAdmin = (req, res, next) => {
   const providedSecret = req.headers['x-admin-secret'];
-  const adminSecret = process.env.ADMIN_SECRET || 'dev-secret'; // Provide default for development testing
-  if (providedSecret !== adminSecret) {
+  const adminSecret = process.env.ADMIN_SECRET;
+  if (!adminSecret || providedSecret !== adminSecret) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   next();
