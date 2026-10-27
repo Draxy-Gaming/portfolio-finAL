@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 const CopyEmailButton = () => {
   const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef(null);
   const email = "draxygamingbd@gmail.com";
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
 
-    setTimeout(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
       setCopied(false);
     }, 2000);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
   return (
     <motion.button
       onClick={copyToClipboard}
