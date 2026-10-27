@@ -1,13 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -255,12 +250,16 @@ app.put('/api/movies/:id', authenticateAdmin, (req, res) => {
 
     // Update categories
     if (Array.isArray(category_ids)) {
-      db.prepare('DELETE FROM movie_categories WHERE user_movie_entry_id = ?').run(entry.id);
+      const updateCategories = db.transaction((entryId, categories) => {
+        db.prepare('DELETE FROM movie_categories WHERE user_movie_entry_id = ?').run(entryId);
 
-      const insertCategory = db.prepare('INSERT INTO movie_categories (user_movie_entry_id, category_id) VALUES (?, ?)');
-      for (const categoryId of category_ids) {
-        insertCategory.run(entry.id, categoryId);
-      }
+        const insertCategory = db.prepare('INSERT INTO movie_categories (user_movie_entry_id, category_id) VALUES (?, ?)');
+        for (const categoryId of categories) {
+          insertCategory.run(entryId, categoryId);
+        }
+      });
+
+      updateCategories(entry.id, category_ids);
     }
 
     res.json({ success: true });
