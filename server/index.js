@@ -92,7 +92,7 @@ app.post('/api/movies/import', authenticateAdmin, (req, res) => {
     const movieData = req.body;
 
     // Check if movie already exists
-    const existingMovie = db.prepare('SELECT id FROM movies WHERE tmdb_id = ?').get(movieData.tmdb_id);
+    const existingMovie = db.prepare('SELECT * FROM movies WHERE tmdb_id = ?').get(movieData.tmdb_id);
 
     if (existingMovie) {
       // Return existing entry
@@ -322,6 +322,10 @@ app.post('/api/categories', authenticateAdmin, (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+
+export default app;

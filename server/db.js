@@ -12,7 +12,7 @@ if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const dbPath = path.join(dataDir, 'movies.db');
+const dbPath = process.env.NODE_ENV === 'test' ? ':memory:' : path.join(dataDir, 'movies.db');
 const db = new Database(dbPath, { verbose: console.log });
 
 // Initialize schema
