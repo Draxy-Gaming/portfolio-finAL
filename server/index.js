@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 import db from './db.js';
+import { generateSlug } from './utils.js';
 
 // Basic health check
 app.get('/api/health', (req, res) => {
@@ -66,15 +67,6 @@ app.get('/api/movies/search', async (req, res) => {
     res.status(500).json({ error: 'Failed to search movies' });
   }
 });
-
-// Helper to generate slug
-const generateSlug = (title, year) => {
-  let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  if (year) {
-    slug += `-${year}`;
-  }
-  return slug;
-};
 
 // Mock auth middleware - required auth
 const authenticateAdmin = (req, res, next) => {
