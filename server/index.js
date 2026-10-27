@@ -289,6 +289,56 @@ app.delete('/api/movies/:id', authenticateAdmin, (req, res) => {
   }
 });
 
+// Contact Form Submission
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Name, email, and message are required' });
+    }
+
+    const serviceId = process.env.EMAILJS_SERVICE_ID;
+    const templateId = process.env.EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.warn('EmailJS credentials are not fully set in the environment. Returning mock success.');
+      return res.json({ success: true, mock: true });
+    }
+
+    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        service_id: serviceId,
+        template_id: templateId,
+        user_id: publicKey,
+        template_params: {
+          from_name: name,
+          to_name: "MD Iftekhar Ferdous",
+          from_email: email,
+          to_email: "draxygamingbd@gmail.com",
+          message: message,
+        }
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('EmailJS Error:', errorText);
+      return res.status(response.status).json({ error: 'Failed to send email' });
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error in /api/contact:', error);
+    res.status(500).json({ error: 'Failed to send contact message' });
+  }
+});
+
 // Get All Categories
 app.get('/api/categories', (req, res) => {
   try {
