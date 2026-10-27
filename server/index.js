@@ -305,7 +305,7 @@ app.post('/api/categories', authenticateAdmin, (req, res) => {
   try {
     const { name, description, is_public } = req.body;
 
-    let slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    let slug = generateSlug(name);
 
     const insert = db.prepare(`
       INSERT INTO categories (name, slug, description, is_public)
