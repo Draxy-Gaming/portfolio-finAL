@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { authenticateAdmin } from './auth.js';
 
 dotenv.config();
 
@@ -74,16 +75,6 @@ const generateSlug = (title, year) => {
     slug += `-${year}`;
   }
   return slug;
-};
-
-// Mock auth middleware - required auth
-const authenticateAdmin = (req, res, next) => {
-  const providedSecret = req.headers['x-admin-secret'];
-  const adminSecret = process.env.ADMIN_SECRET || 'dev-secret'; // Provide default for development testing
-  if (providedSecret !== adminSecret) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  next();
 };
 
 // Import Movie API
