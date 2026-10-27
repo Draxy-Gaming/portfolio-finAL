@@ -9,7 +9,6 @@ import Testimonial from "./sections/Testimonial";
 import Contact from "./sections/Contact";
 import Footer from './sections/Footer';
 
-// Movies Components (to be created)
 import MoviesPage from "./components/movies/MoviesPage";
 import MovieDetail from "./components/movies/MovieDetail";
 import AdminMovies from "./components/admin/AdminMovies";
