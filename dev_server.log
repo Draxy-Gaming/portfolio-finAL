@@ -1,0 +1,85 @@
+
+> portfolio@0.0.0 dev /app
+> concurrently "vite" "node server/index.js"
+
+[1] CREATE TABLE IF NOT EXISTS movies (
+[1]     id INTEGER PRIMARY KEY AUTOINCREMENT,
+[1]     title TEXT NOT NULL,
+[1]     original_title TEXT,
+[1]     slug TEXT UNIQUE NOT NULL,
+[1]     overview TEXT,
+[1]     release_date TEXT,
+[1]     release_year INTEGER,
+[1]     runtime INTEGER,
+[1]     poster_url TEXT,
+[1]     backdrop_url TEXT,
+[1]     language TEXT,
+[1]     tmdb_id INTEGER UNIQUE,
+[1]     imdb_id TEXT,
+[1]     external_rating REAL,
+[1]     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+[1]     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+[1]   );
+[1] CREATE TABLE IF NOT EXISTS user_movie_entries (
+[1]     id INTEGER PRIMARY KEY AUTOINCREMENT,
+[1]     movie_id INTEGER NOT NULL UNIQUE,
+[1]     status TEXT CHECK(status IN ('watched', 'want_to_watch', 'favorite', 'currently_watching', 'dropped')) NOT NULL DEFAULT 'want_to_watch',
+[1]     personal_rating REAL CHECK(personal_rating >= 0 AND personal_rating <= 10),
+[1]     watch_date TEXT,
+[1]     rewatch_count INTEGER DEFAULT 0,
+[1]     short_note TEXT,
+[1]     full_review TEXT,
+[1]     is_public BOOLEAN DEFAULT 0,
+[1]     is_featured BOOLEAN DEFAULT 0,
+[1]     display_order INTEGER,
+[1]     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+[1]     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+[1]     FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE
+[1]   );
+[1] CREATE TABLE IF NOT EXISTS categories (
+[1]     id INTEGER PRIMARY KEY AUTOINCREMENT,
+[1]     name TEXT NOT NULL UNIQUE,
+[1]     slug TEXT NOT NULL UNIQUE,
+[1]     description TEXT,
+[1]     is_public BOOLEAN DEFAULT 1,
+[1]     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+[1]     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+[1]   );
+[1] CREATE TABLE IF NOT EXISTS movie_categories (
+[1]     id INTEGER PRIMARY KEY AUTOINCREMENT,
+[1]     user_movie_entry_id INTEGER NOT NULL,
+[1]     category_id INTEGER NOT NULL,
+[1]     FOREIGN KEY (user_movie_entry_id) REFERENCES user_movie_entries(id) ON DELETE CASCADE,
+[1]     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+[1]     UNIQUE(user_movie_entry_id, category_id)
+[1]   );
+[1] -- Create triggers to update updated_at
+[1]   CREATE TRIGGER IF NOT EXISTS update_movies_updated_at
+[1]   AFTER UPDATE ON movies
+[1]   FOR EACH ROW
+[1]   BEGIN
+[1]     UPDATE movies SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+[1]   END;
+[1] CREATE TRIGGER IF NOT EXISTS update_user_movie_entries_updated_at
+[1]   AFTER UPDATE ON user_movie_entries
+[1]   FOR EACH ROW
+[1]   BEGIN
+[1]     UPDATE user_movie_entries SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+[1]   END;
+[1] CREATE TRIGGER IF NOT EXISTS update_categories_updated_at
+[1]   AFTER UPDATE ON categories
+[1]   FOR EACH ROW
+[1]   BEGIN
+[1]     UPDATE categories SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+[1]   END;
+[1] ◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[1] Server running on port 3001
+[0]
+[0]   VITE v6.4.3  ready in 324 ms
+[0]
+[0]   ➜  Local:   http://localhost:5173/
+[0]   ➜  Network: use --host to expose
+[1] Terminated
+[1] node server/index.js exited with code 143
+[0] vite exited with code 143
+ ELIFECYCLE  Command failed with exit code 1.
