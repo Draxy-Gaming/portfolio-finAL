@@ -173,16 +173,44 @@ app.get('/api/movies', (req, res) => {
 
     const movies = db.prepare(query).all();
 
-    // Fetch categories for each movie
-    const moviesWithCategories = movies.map(movie => {
-      const categories = db.prepare(`
-        SELECT c.*
-        FROM categories c
-        JOIN movie_categories mc ON c.id = mc.category_id
-        WHERE mc.user_movie_entry_id = ?
-      `).all(movie.entry_id);
-      return { ...movie, categories };
-    });
+    // Fetch all categories for all retrieved movies in one query to avoid N+1 problem
+    const entryIds = movies.map(movie => movie.entry_id).filter(id => id != null);
+
+    let moviesWithCategories = movies.map(m => ({ ...m, categories: [] }));
+
+    if (entryIds.length > 0) {
+      const allCategories = [];
+      const CHUNK_SIZE = 900; // SQLite default variable limit is 999
+      for (let i = 0; i < entryIds.length; i += CHUNK_SIZE) {
+        const chunk = entryIds.slice(i, i + CHUNK_SIZE);
+        const placeholders = chunk.map(() => '?').join(',');
+
+        const chunkCategories = db.prepare(`
+          SELECT c.*, mc.user_movie_entry_id
+          FROM categories c
+          JOIN movie_categories mc ON c.id = mc.category_id
+          WHERE mc.user_movie_entry_id IN (${placeholders})
+        `).all(...chunk);
+
+        allCategories.push(...chunkCategories);
+      }
+
+      // Group categories by user_movie_entry_id
+      const categoriesByEntryId = {};
+      for (const cat of allCategories) {
+        if (!categoriesByEntryId[cat.user_movie_entry_id]) {
+          categoriesByEntryId[cat.user_movie_entry_id] = [];
+        }
+        // Exclude user_movie_entry_id from the category object to match original format
+        const { user_movie_entry_id, ...categoryData } = cat;
+        categoriesByEntryId[cat.user_movie_entry_id].push(categoryData);
+      }
+
+      moviesWithCategories = movies.map(movie => ({
+        ...movie,
+        categories: categoriesByEntryId[movie.entry_id] || []
+      }));
+    }
 
     res.json(moviesWithCategories);
   } catch (error) {
